@@ -62,6 +62,8 @@ function generatePassword() {
     // and make sure there will be at least one lower case character in the password
     pwGenerated += randomStr(1, lowerCaseStr);
     nbCharToGenerate--;   // decrease nb of characters left to generate by 1
+  } else { // otherwise generate pw from numeric string
+    charOptions += numStr;
   }
   // generate a random password of length defined by the user and from the pool of characters available in charOptions
   pwGenerated += randomStr(nbCharToGenerate, charOptions);
