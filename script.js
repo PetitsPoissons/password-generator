@@ -15,6 +15,15 @@ function nullAnswer(userInput) {
   }
 }*/
 
+// utility function to generate a random string of length passed as argument and from a string of allowed characters passed as argument
+function randomStr(len, str) { 
+  var answer = "";
+  for (var i = len; i > 0; i--) { 
+      answer += str[Math.floor(Math.random() * str.length)]; 
+  } 
+  return answer; 
+} 
+
 // function to set and validate password length
 function getPasswordLength () {
   var userAnswer = "";
@@ -37,10 +46,13 @@ function getPasswordLength () {
   }
 }
 
+// function to generate a random password based on user criteria
 function generatePassword() {
-  // generate a random integer with as many digits as password length
-  var num = Math.floor(Math.random() * (10**passwordObj.length) + 1);
-  return num
+  // define string from which password can be selected
+  var charOptions = '0123456789abcdefghijklmnopqrstuvwxyz';
+  // generate a random password of length defined by the user and from the pool of characters available in charOptions
+  var pwGenerated = randomStr(passwordObj.length, charOptions);
+  return pwGenerated
 }
 
 // Assignment Code
