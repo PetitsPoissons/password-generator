@@ -52,7 +52,7 @@ function generatePassword() {
   var charOptions = '0123456789abcdefghijklmnopqrstuvwxyz';
   // generate a random password of length defined by the user and from the pool of characters available in charOptions
   var pwGenerated = randomStr(passwordObj.length, charOptions);
-  return pwGenerated
+  return pwGenerated;
 }
 
 // Assignment Code
