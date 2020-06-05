@@ -18,10 +18,23 @@ function nullAnswer(userInput) {
 // function to set and validate password length
 function getPasswordLength () {
   var userAnswer = "";
-  while (!parseInt(userAnswer)) {
-    userAnswer = window.prompt("Choose your password length (between 8 and 128 characters");
+  // force user to enter an integer
+  while (!Number.isInteger(parseFloat(userAnswer))) {
+    userAnswer = window.prompt("Choose your password length (enter an integer between 8 and 128):");
   };
-  if 
+  // check that the integer entered by the user is between 8 and 128
+  var pwLength = parseInt(userAnswer);
+  if (pwLength < 8) {
+    window.alert("The password should be at least 8 characters long. Please try again.");
+    getPasswordLength();
+  }
+  else if (pwLength > 128) {
+    window.alert("The password cannot be more than 128 characters long. Please try again.");
+    getPasswordLength();
+  }
+  else {
+    return pwLength;
+  }
 }
 
 function generatePassword() {
