@@ -2,7 +2,7 @@ var passwordObj = {
   length: getPasswordLength(),
   lowerCase: window.confirm("Would you like lower case characters in your password?"),
   upperCase: window.confirm("Would you like upper case characters in your password?"),
-  //numChar: getNumeric(),
+  numChar: window.confirm("Would you like numeric characters in your password?"),
   //specialChar: getSpecialChar()
 }
 var numStr = "0123456789";
@@ -74,9 +74,13 @@ function generatePassword() {
     nbCharToGenerate--;   // decrease nb of characters left to generate by 1
   }
   
-  // if user rejected both lower and upper case criteria, generate pw from numeric string
-  if (charOptions === "") {
+  // if user selected to have numeric characters ...
+  if (passwordObj.numChar) {
+    // ... add the numeric string to the characters available for password generation,
     charOptions += numStr;
+    // and make sure there will be at least one numeric character in the password
+    pwGenerated += randomStr(1, numStr);
+    nbCharToGenerate--;   // decrease nb of characters left to generate by 1
   }
 
   // generate a random password of length defined by the user and from the pool of characters available in charOptions
