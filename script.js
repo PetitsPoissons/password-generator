@@ -3,11 +3,12 @@ var passwordObj = {
   lowerCase: window.confirm("Would you like lower case characters in your password?"),
   upperCase: window.confirm("Would you like upper case characters in your password?"),
   numChar: window.confirm("Would you like numeric characters in your password?"),
-  //specialChar: getSpecialChar()
+  specialChar: window.confirm("Would you like special characters in your password?")
 }
-var numStr = "0123456789";
+var numCharStr = "0123456789";
 var lowerCaseStr = "abcdefghijklmnopqrstuvwxyz";
 var upperCaseStr = lowerCaseStr.toUpperCase();
+var specialCharStr = "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
 
 /*
 // utility function to check for null user answers
@@ -77,9 +78,18 @@ function generatePassword() {
   // if user selected to have numeric characters ...
   if (passwordObj.numChar) {
     // ... add the numeric string to the characters available for password generation,
-    charOptions += numStr;
+    charOptions += numCharStr;
     // and make sure there will be at least one numeric character in the password
-    pwGenerated += randomStr(1, numStr);
+    pwGenerated += randomStr(1, numCharStr);
+    nbCharToGenerate--;   // decrease nb of characters left to generate by 1
+  }
+
+  // if user selected to have special characters ...
+  if (passwordObj.specialChar) {
+    // ... add the numeric string to the characters available for password generation,
+    charOptions += specialCharStr;
+    // and make sure there will be at least one numeric character in the password
+    pwGenerated += randomStr(1, specialCharStr);
     nbCharToGenerate--;   // decrease nb of characters left to generate by 1
   }
 
