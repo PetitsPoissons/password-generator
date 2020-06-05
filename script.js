@@ -38,7 +38,9 @@ function getPasswordLength () {
 }
 
 function generatePassword() {
-
+  // generate a random integer with as many digits as password length
+  var num = Math.floor(Math.random() * (10**passwordObj.length) + 1);
+  return num
 }
 
 // Assignment Code
@@ -48,13 +50,8 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
-//generateBtn.addEventListener("click", writePassword);
-
-console.log(passwordObj.length);
-
+generateBtn.addEventListener("click", writePassword);
