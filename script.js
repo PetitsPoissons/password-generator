@@ -1,10 +1,14 @@
 var passwordObj = {
   length: getPasswordLength(),
-  //lowerCase: getLowerCase(),
+  lowerCase: window.confirm("Would you like lower case characters in your password?"),
   //upperCase: getUpperCase(),
   //numChar: getNumeric(),
   //specialChar: getSpecialChar()
 }
+var numStr = "0123456789";
+var lowerCaseStr = "abcdefghijklmnopqrstuvwxyz";
+//var upperCaseStr = lowerCaseStr.toUpperCase();
+
 /*
 // utility function to check for null user answers
 function nullAnswer(userInput) {
@@ -48,11 +52,20 @@ function getPasswordLength () {
 
 // function to generate a random password based on user criteria
 function generatePassword() {
-  // define string from which password can be selected
-  var charOptions = '0123456789abcdefghijklmnopqrstuvwxyz';
+  var pwGenerated = "";
+  var nbCharToGenerate = passwordObj.length;
+  var charOptions = "";
+  // if user selected to have lower case characters ...
+  if (passwordObj.lowerCase) {
+    // ... add the lower alpha string to the characters available for password generation,
+    charOptions += lowerCaseStr;
+    // and make sure there will be at least one lower case character in the password
+    pwGenerated += randomStr(1, lowerCaseStr);
+    nbCharToGenerate--;   // decrease nb of characters left to generate by 1
+  }
   // generate a random password of length defined by the user and from the pool of characters available in charOptions
-  var pwGenerated = randomStr(passwordObj.length, charOptions);
-  return pwGenerated
+  pwGenerated += randomStr(nbCharToGenerate, charOptions);
+  return pwGenerated;
 }
 
 // Assignment Code
