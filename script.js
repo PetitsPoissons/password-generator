@@ -13,14 +13,34 @@ function randomStr(len, str) {
       answer += str[Math.floor(Math.random() * str.length)]; 
   } 
   return answer; 
-} 
+}
+
+// Utility function to shuffle a string
+function shuffle(someString, n) {
+  console.log("+++++++ SHUFFLE FUNCTION ++++++++++");
+  console.log("someStringtoShuffle: " + someString + ", n=" + n);
+  var arr = someString.split('');             // conver someString to array
+  console.log("someStringtoArray: " + arr);
+  for (var i = 0 ; i < n-1 ; ++i) {
+    console.log("i: " + i, arr[i]);
+    var j = Math.floor(Math.random() * n);    // Get random of [0, n-1]
+    var temp = arr[i];
+    console.log("j: " + j, arr[j]);           // Swap someString[i] and someString[j]
+    arr[i] = arr[j];
+    console.log("new i: " + i, arr[i]);
+    arr[j] = temp;
+    console.log("new j: " + j, arr[j]);
+  }
+  someString = arr.join('');                  // Swap arr[i] and arr[j]
+  console.log("shuffled string: " + arr);
+  return someString;                          // Return shuffled string
+}
 
 // Function to force the user to enter an integer
 function getNewInteger () {
   someInput = "";
   while (!Number.isInteger(parseFloat(someInput))) {
     someInput = window.prompt("Your password should be no less than 8 characters long and no more than 128 characters long. Please enter an integer between 8 and 128.");
-    console.log("someInput: " + someInput);
   };
   return parseInt(someInput);
 }
@@ -30,16 +50,14 @@ function getPasswordLength () {
   var pwLength = getNewInteger();
   while (pwLength < 8 || pwLength > 128) {
     pwLength = getNewInteger();
-    console.log("pwLength: " + pwLength);
   }
-  console.log("last pwLength before returning it: " + pwLength);
   return pwLength;
 }
 
 // function to get user criteria for password
 function getUserCriteria () {
   while (!passwordObj.lowerCase && !passwordObj.upperCase && !passwordObj.numChar && !passwordObj.specialChar) {
-    window.alert("You must select at least one among four criteria for password generation. Get ready!")
+    window.alert("Please select AT LEAST ONE among the following four criteria for password generation.");
     passwordObj.lowerCase = window.confirm("Would you like lower case characters in your password?");
     passwordObj.upperCase = window.confirm("Would you like upper case characters in your password?");
     passwordObj.numChar = window.confirm("Would you like numeric characters in your password?");
@@ -91,7 +109,9 @@ function generatePassword() {
 
   // generate a random password of length defined by the user and from the pool of characters available in charOptions
   pwGenerated += randomStr(nbCharToGenerate, charOptions);
-  return pwGenerated;
+  console.log(pwGenerated, passwordObj.length);
+  pwShuffled = shuffle(pwGenerated, passwordObj.length);
+  return pwShuffled;
 }
 
 // Assignment Code
@@ -107,7 +127,6 @@ function writePassword() {
     specialChar: ""
   }
   passwordObj.length = getPasswordLength();
-  console.log("passwordObj.length: " + passwordObj.length);
   getUserCriteria();
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
