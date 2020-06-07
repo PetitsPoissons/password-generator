@@ -6,8 +6,7 @@ var lowerCaseStr = "abcdefghijklmnopqrstuvwxyz";
 var upperCaseStr = lowerCaseStr.toUpperCase();
 var specialCharStr = "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
 
-/* UTILITY FUNCTIONS *********************************************************************************/
-// to generate a random string of length passed as argument and from a string of allowed characters passed as argument
+// Utility function to generate a random string of length passed as argument and from a string of allowed characters passed as argument
 function randomStr(len, str) { 
   var answer = "";
   for (var i = len; i > 0; i--) { 
@@ -16,25 +15,20 @@ function randomStr(len, str) {
   return answer; 
 } 
 
-// force user to enter an integer
+// Function to force the user to enter an integer
 function getNewInteger () {
   someInput = "";
   while (!Number.isInteger(parseFloat(someInput))) {
-    //someInput = window.prompt("Please enter an integer between 8 and 128:");
     someInput = window.prompt("Your password should be no less than 8 characters long and no more than 128 characters long. Please enter an integer between 8 and 128.");
     console.log("someInput: " + someInput);
   };
   return parseInt(someInput);
 }
 
-// function to set and validate password length
+// Function to set and validate password length
 function getPasswordLength () {
-  //var userAnswer = getNewInteger();
-  // check that the integer entered by the user is between 8 and 128
-  //var pwLength = parseInt(userAnswer);
   var pwLength = getNewInteger();
   while (pwLength < 8 || pwLength > 128) {
-    //pwLength = window.promt("Your password should be no less than 8 characters long and no more than 128 characters long. Please enter an integer between 8 and 128.");
     pwLength = getNewInteger();
     console.log("pwLength: " + pwLength);
   }
