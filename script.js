@@ -1,24 +1,14 @@
-var passwordObj = {
-  length: getPasswordLength(),
-  lowerCase: window.confirm("Would you like lower case characters in your password?"),
-  upperCase: window.confirm("Would you like upper case characters in your password?"),
-  numChar: window.confirm("Would you like numeric characters in your password?"),
-  specialChar: window.confirm("Would you like special characters in your password?")
-}
+var passwordObj /*= {
+  length: "",
+  lowerCase: "",
+  upperCase: "",
+  numChar: "",
+  specialChar: ""
+}*/
 var numCharStr = "0123456789";
 var lowerCaseStr = "abcdefghijklmnopqrstuvwxyz";
 var upperCaseStr = lowerCaseStr.toUpperCase();
 var specialCharStr = "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
-
-/*
-// utility function to check for null user answers
-function nullAnswer(userInput) {
-  if (userInput === "" || userInput === null) {
-    return true;
-  } else {
-    return false;
-  }
-}*/
 
 // utility function to generate a random string of length passed as argument and from a string of allowed characters passed as argument
 function randomStr(len, str) { 
@@ -48,6 +38,17 @@ function getPasswordLength () {
   }
   else {
     return pwLength;
+  }
+}
+
+// function to get user criteria for password
+function getUserCriteria () {
+  while (!passwordObj.lowerCase && !passwordObj.upperCase && !passwordObj.numChar && !passwordObj.specialChar) {
+    window.alert("You must select at least one among four criteria for password generation. Get ready!")
+    passwordObj.lowerCase = window.confirm("Would you like lower case characters in your password?");
+    passwordObj.upperCase = window.confirm("Would you like upper case characters in your password?");
+    passwordObj.numChar = window.confirm("Would you like numeric characters in your password?");
+    passwordObj.specialChar = window.confirm("Would you like special characters in your password?");
   }
 }
 
@@ -103,6 +104,21 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
+  passwordObj = {
+    length: "",
+    lowerCase: "",
+    upperCase: "",
+    numChar: "",
+    specialChar: ""
+  }
+  passwordObj.length = getPasswordLength();
+  /*
+  passwordObj.lowerCase = window.confirm("Would you like lower case characters in your password?");
+  passwordObj.upperCase = window.confirm("Would you like upper case characters in your password?");
+  passwordObj.numChar = window.confirm("Would you like numeric characters in your password?");
+  passwordObj.specialChar = window.confirm("Would you like special characters in your password?");
+  */
+ getUserCriteria();
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
