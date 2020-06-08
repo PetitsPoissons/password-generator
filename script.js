@@ -16,17 +16,12 @@ function randomStr(n, str) {
 function shuffle(someString, n) {
   var arr = someString.split('');             // convert someString to an array b/c strings are immutable
   for (var i = 0 ; i < n-1 ; ++i) {
-    console.log("i: " + i, arr[i]);
     var j = Math.floor(Math.random() * n);    // get random of [0, n-1]
     var temp = arr[i];
-    console.log("j: " + j, arr[j]);           // swap someString[i] and someString[j]
-    arr[i] = arr[j];
-    console.log("new i: " + i, arr[i]);
+    arr[i] = arr[j];                          // swap arr[i] and arr[j]
     arr[j] = temp;
-    console.log("new j: " + j, arr[j]);
   }
-  someString = arr.join('');                  // swap arr[i] and arr[j]
-  console.log("shuffled string: " + arr);
+  someString = arr.join('');                  // convert array back to string
   return someString;                          // return shuffled string
 }
 
@@ -64,47 +59,33 @@ function generatePassword() {
   var pwGenerated = "";
   var nbCharToGenerate = passwordObj.length;
   var charOptions = "";
-  /*var pwSetUp = function (charAllowed) {
-    charOptions += 
-  }*/
+
+  // Set up the logic behind each user criterion selection
+  var pwSetUp = function (newCharAllowed) {
+    charOptions += newCharAllowed;                // add the newCharAllowed string to the charOptions available for password generation
+    pwGenerated += randomStr(1, newCharAllowed);  // make sure there will be at least one character from the charAllowed string in the password
+    nbCharToGenerate--;                           // decrease nb of characters left to generate by 1
+  }
   // if user selected to have lower case characters ...
   if (passwordObj.lowerCase) {
-    // ... add the lower alpha string to the characters available for password generation,
-    charOptions += lowerCaseStr;
-    // and make sure there will be at least one lower case character in the password
-    pwGenerated += randomStr(1, lowerCaseStr);
-    nbCharToGenerate--;   // decrease nb of characters left to generate by 1
+    pwSetUp(lowerCaseStr);
   }
-
   // if user selected to have upper case characters ...
   if (passwordObj.upperCase) {
-    // ... add the upper alpha string to the characters available for password generation,
-    charOptions += upperCaseStr;
-    // and make sure there will be at least one upper case character in the password
-    pwGenerated += randomStr(1, upperCaseStr);
-    nbCharToGenerate--;   // decrease nb of characters left to generate by 1
+    pwSetUp(upperCaseStr);
   }
-  
   // if user selected to have numeric characters ...
   if (passwordObj.numChar) {
-    // ... add the numeric string to the characters available for password generation,
-    charOptions += numCharStr;
-    // and make sure there will be at least one numeric character in the password
-    pwGenerated += randomStr(1, numCharStr);
-    nbCharToGenerate--;   // decrease nb of characters left to generate by 1
+    pwSetUp(numCharStr);
   }
-
   // if user selected to have special characters ...
   if (passwordObj.specialChar) {
-    // ... add the numeric string to the characters available for password generation,
-    charOptions += specialCharStr;
-    // and make sure there will be at least one numeric character in the password
-    pwGenerated += randomStr(1, specialCharStr);
-    nbCharToGenerate--;   // decrease nb of characters left to generate by 1
+    pwSetUp(specialCharStr);
   }
 
-  // generate a random password of length defined by the user and from the pool of characters available in charOptions
+  // randomly generate the remaining number of characters needed and add them to pwGenerated to get to the password length specified by the user
   pwGenerated += randomStr(nbCharToGenerate, charOptions);
+  // shuffle the characters generated (otherwise the first 1-4 are systematically in the order of the criteria selected by the user)
   pwShuffled = shuffle(pwGenerated, passwordObj.length);
   return pwShuffled;
 }
@@ -114,6 +95,7 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
+  // create a password object to store validated values
   passwordObj = {
     length: "",
     lowerCase: "",
@@ -121,11 +103,11 @@ function writePassword() {
     numChar: "",
     specialChar: ""
   }
-  passwordObj.length = getPasswordLength();
-  getUserCriteria();
-  var password = generatePassword();
+  passwordObj.length = getPasswordLength();  // returns a valid password length
+  getUserCriteria();                         // returns true or false for each of the four criteria, with at least one criterion true
+  var password = generatePassword();         // generates a random password based on user defined length and character types 
   var passwordText = document.querySelector("#password");
-  passwordText.value = password;
+  passwordText.value = password;            // et voilà!
 }
 
 // Add event listener to generate button
